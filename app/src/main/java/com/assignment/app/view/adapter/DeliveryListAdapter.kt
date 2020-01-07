@@ -13,6 +13,8 @@ import com.assignment.app.service.model.Delivery
 import com.assignment.app.view.callback.ItemClickCallback
 
 class DeliveryListAdapter() : ListAdapter<Delivery, DeliveryListAdapter.DeliveryViewHolder>(DIFF_CALLBACK) {
+    private lateinit var list: List<Delivery>
+
 
     companion object {
         val DIFF_CALLBACK: DiffUtil.ItemCallback<Delivery> =
@@ -41,7 +43,7 @@ class DeliveryListAdapter() : ListAdapter<Delivery, DeliveryListAdapter.Delivery
     }
 
     override fun onBindViewHolder(holder: DeliveryViewHolder, position: Int) {
-        val currentDelivery : Delivery = getItem(position)
+        val currentDelivery : Delivery = list.get(position)
         holder.itemBinding.delivery = currentDelivery
     }
 
@@ -50,6 +52,16 @@ class DeliveryListAdapter() : ListAdapter<Delivery, DeliveryListAdapter.Delivery
     }
     fun setOnClickListener(listener: ItemClickCallback) {
         itemClickCallback = listener
+    }
+
+    fun setDelivery(list: List<Delivery>){
+        this.list = list
+        notifyDataSetChanged()
+
+
+    }
+    override fun  getItemCount(): Int {
+        return list.size
     }
 
 
