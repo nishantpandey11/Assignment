@@ -1,6 +1,7 @@
 package com.assignment.app.view.adapter
 
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
@@ -11,8 +12,9 @@ import com.assignment.app.R
 import com.assignment.app.databinding.DeliveryListItemBinding
 import com.assignment.app.service.model.Delivery
 import com.assignment.app.view.callback.ItemClickCallback
+import com.assignment.app.view.ui.deliverylist.DeliveryViewModel
 
-class DeliveryListAdapter() : ListAdapter<Delivery, DeliveryListAdapter.DeliveryViewHolder>(DIFF_CALLBACK) {
+class DeliveryListAdapter : ListAdapter<Delivery, DeliveryListAdapter.DeliveryViewHolder>(DIFF_CALLBACK) {
     private lateinit var list: List<Delivery>
 
 
@@ -44,7 +46,9 @@ class DeliveryListAdapter() : ListAdapter<Delivery, DeliveryListAdapter.Delivery
 
     override fun onBindViewHolder(holder: DeliveryViewHolder, position: Int) {
         val currentDelivery : Delivery = list.get(position)
-        holder.itemBinding.delivery = currentDelivery
+       ///holder.itemBinding. = currentDelivery
+        holder.bind(currentDelivery)
+        Log.e("===>bind",currentDelivery.id)
     }
 
     fun getDeliveryAtPosition(position: Int) : Delivery{
@@ -54,20 +58,26 @@ class DeliveryListAdapter() : ListAdapter<Delivery, DeliveryListAdapter.Delivery
         itemClickCallback = listener
     }
 
-    fun setDelivery(list: List<Delivery>){
+    public fun setDelivery(list: List<Delivery>){
         this.list = list
         notifyDataSetChanged()
 
 
     }
     override fun  getItemCount(): Int {
-        return list.size
+        return if(::list.isInitialized) list.size else 0
     }
 
 
     class DeliveryViewHolder(itemBinding: DeliveryListItemBinding) :
         RecyclerView.ViewHolder(itemBinding.root) {
         val itemBinding: DeliveryListItemBinding = itemBinding
+        private val viewModel = DeliveryViewModel()
+
+        fun bind(delivery: Delivery){
+            viewModel.bind(delivery)
+            itemBinding.viewModel = viewModel
+        }
 
     }
 

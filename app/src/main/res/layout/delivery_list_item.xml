@@ -4,8 +4,8 @@
 
     <data>
         <variable
-            name="delivery"
-            type="com.assignment.app.service.model.Delivery" />
+            name="viewModel"
+            type="com.assignment.app.view.ui.deliverylist.DeliveryViewModel" />
         <variable
             name="callback"
             type="com.assignment.app.view.callback.ItemClickCallback"/>
@@ -31,35 +31,35 @@
                 android:layout_width="@dimen/dimen_profile_pic"
                 android:layout_height="@dimen/dimen_profile_pic"
                 android:layout_centerVertical="true"
-                app:picture="@{delivery.goodsPicture}"
                 android:src="@drawable/ic_person_black_24dp" />
 
-            <androidx.appcompat.widget.AppCompatTextView
+            <TextView
                 android:id="@+id/tv_from"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_toEndOf="@+id/iv_pic"
-                android:text="@{String.format(@string/from,delivery.route.start)}"
+                android:text="@{viewModel.getDeliveryFrom()}"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
-            <androidx.appcompat.widget.AppCompatTextView
+            <TextView
                 android:id="@+id/tv_to"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/tv_from"
                 android:layout_toEndOf="@+id/iv_pic"
-                android:text="@{String.format(@string/to,delivery.route.end)}"
+                android:text="@{viewModel.getDeliveryTo()}"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
-            <androidx.appcompat.widget.AppCompatTextView
+            <TextView
                 android:id="@+id/tv_price"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/tv_from"
                 android:layout_alignParentEnd="true"
-                android:text="@{String.format(@string/price,delivery.price)}"
+                android:text="@{viewModel.getDeliveryFee()}"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large" />
         </RelativeLayout>
     </androidx.cardview.widget.CardView>
+   <!-- android:text="@{delivery::getPrice}"-->
 
 </layout>

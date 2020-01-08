@@ -3,4 +3,6 @@
     <string name="from">From: %s</string>
     <string name="to">TO: %s</string>
     <string name="price">$ %s</string>
+    <string name="retry">Retry</string>
+    <string name="post_error">Something went wrong!</string>
 </resources>

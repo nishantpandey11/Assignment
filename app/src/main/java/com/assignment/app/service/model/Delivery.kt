@@ -26,6 +26,20 @@ data class Delivery(
         )
 
     }
+    /*
+     companion object {
+        @BindingAdapter("app:picture")
+        @JvmStatic
+        fun loadImage(imageView: ImageView, imageURL: String?) {
+            Glide.with(imageView.context)
+                .setDefaultRequestOptions(
+                    RequestOptions().circleCrop())
+                .load(imageURL)
+                .placeholder(R.drawable.ic_menu_report_image)
+                .into(imageView)
+        }
+    }
+     */
 }
 
 @BindingAdapter("picture")
