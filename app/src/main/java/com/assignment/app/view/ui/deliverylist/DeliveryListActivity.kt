@@ -22,9 +22,9 @@ class DeliveryListActivity : AppCompatActivity(), ItemClickCallback {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main)
-        var deliveryAdapter = DeliveryListAdapter()
-        deliveryAdapter.setOnClickListener(this)
-        mainBinding.recyclerView.adapter = deliveryAdapter
+        //var deliveryAdapter = DeliveryListAdapter()
+        //deliveryAdapter.setOnClickListener(this)
+        //mainBinding.recyclerView.adapter = deliveryAdapter
 
         viewModel = ViewModelProviders.of(this).get(DeliveryListViewModel::class.java)
         viewModel.errorMessage.observe(this, Observer { errorMessage ->

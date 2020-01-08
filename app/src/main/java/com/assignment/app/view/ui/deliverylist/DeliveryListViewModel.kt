@@ -56,10 +56,10 @@ class DeliveryListViewModel : BaseViewModel() {
     }
 
     private fun onRetrieveDeliveryListSuccess(delivery: List<Delivery>) {
-        deliveryListAdapter.setDelivery(delivery)
+        deliveryListAdapter.submitList(delivery)
         //Log.e("===>",delivery[0].id+"")
         for (item in delivery){
-            Log.e("===>",item.id+"")
+            Log.e("===>",item.toString())
         }
     }
 

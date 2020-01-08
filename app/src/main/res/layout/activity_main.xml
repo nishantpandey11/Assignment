@@ -2,9 +2,14 @@
 <layout>
 
     <data>
+
         <variable
             name="viewModel"
             type="com.assignment.app.view.ui.deliverylist.DeliveryListViewModel" />
+
+        <variable
+            name="callback"
+            type="com.assignment.app.view.callback.ItemClickCallback" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -17,17 +22,18 @@
         <ProgressBar
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:mutableVisibility="@{viewModel.getLoadingVisibility()}"
-            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:mutableVisibility="@{viewModel.getLoadingVisibility()}" />
 
         <androidx.recyclerview.widget.RecyclerView
 
             android:id="@+id/recycler_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            app:adapter="@{viewModel.getDeliveryListAdapter()}"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"

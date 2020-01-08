@@ -26,6 +26,12 @@ data class Delivery(
         )
 
     }
+
+    override fun toString(): String {
+        return "Delivery(id='$id', remarks='$remarks', pickupTime='$pickupTime', goodsPicture='$goodsPicture', deliveryFee='$deliveryFee', surcharge='$surcharge', route=$route, sender=$sender)"
+    }
+
+
     /*
      companion object {
         @BindingAdapter("app:picture")
@@ -40,14 +46,4 @@ data class Delivery(
         }
     }
      */
-}
-
-@BindingAdapter("picture")
-fun loadImage(imageView: ImageView, imageURL: String?) {
-    Glide.with(imageView.context)
-        .setDefaultRequestOptions(
-            RequestOptions().circleCrop())
-        .load(imageURL)
-        .placeholder(R.drawable.ic_menu_report_image)
-        .into(imageView)
 }

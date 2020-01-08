@@ -15,7 +15,7 @@ import com.assignment.app.view.callback.ItemClickCallback
 import com.assignment.app.view.ui.deliverylist.DeliveryViewModel
 
 class DeliveryListAdapter : ListAdapter<Delivery, DeliveryListAdapter.DeliveryViewHolder>(DIFF_CALLBACK) {
-    private lateinit var list: List<Delivery>
+    //private lateinit var list: List<Delivery>
 
 
     companion object {
@@ -45,10 +45,9 @@ class DeliveryListAdapter : ListAdapter<Delivery, DeliveryListAdapter.DeliveryVi
     }
 
     override fun onBindViewHolder(holder: DeliveryViewHolder, position: Int) {
-        val currentDelivery : Delivery = list.get(position)
+        val currentDelivery : Delivery = getItem(position)//list.get(position)
        ///holder.itemBinding. = currentDelivery
         holder.bind(currentDelivery)
-        Log.e("===>bind",currentDelivery.id)
     }
 
     fun getDeliveryAtPosition(position: Int) : Delivery{
@@ -58,7 +57,7 @@ class DeliveryListAdapter : ListAdapter<Delivery, DeliveryListAdapter.DeliveryVi
         itemClickCallback = listener
     }
 
-    public fun setDelivery(list: List<Delivery>){
+   /* public fun setDelivery(list: List<Delivery>){
         this.list = list
         notifyDataSetChanged()
 
@@ -66,12 +65,12 @@ class DeliveryListAdapter : ListAdapter<Delivery, DeliveryListAdapter.DeliveryVi
     }
     override fun  getItemCount(): Int {
         return if(::list.isInitialized) list.size else 0
-    }
+    }*/
 
 
-    class DeliveryViewHolder(itemBinding: DeliveryListItemBinding) :
+    class DeliveryViewHolder(private val itemBinding: DeliveryListItemBinding) :
         RecyclerView.ViewHolder(itemBinding.root) {
-        val itemBinding: DeliveryListItemBinding = itemBinding
+        //private val itemBinding: DeliveryListItemBinding = itemBinding
         private val viewModel = DeliveryViewModel()
 
         fun bind(delivery: Delivery){
