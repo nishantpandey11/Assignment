@@ -1,7 +1,6 @@
 package com.assignment.app.view.adapter
 
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
@@ -12,7 +11,7 @@ import com.assignment.app.R
 import com.assignment.app.databinding.DeliveryListItemBinding
 import com.assignment.app.service.model.Delivery
 import com.assignment.app.view.callback.ItemClickCallback
-import com.assignment.app.view.ui.deliverylist.DeliveryViewModel
+import com.assignment.app.viewmodel.DeliveryViewModel
 
 class DeliveryListAdapter : ListAdapter<Delivery, DeliveryListAdapter.DeliveryViewHolder>(DIFF_CALLBACK) {
     //private lateinit var list: List<Delivery>

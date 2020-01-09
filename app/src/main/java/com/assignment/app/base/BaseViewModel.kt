@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import com.assignment.app.di.component.DaggerViewModelInjector
 import com.assignment.app.di.component.ViewModelInjector
 import com.assignment.app.di.module.NetworkModule
-import com.assignment.app.view.ui.deliverylist.DeliveryListViewModel
+import com.assignment.app.viewmodel.DeliveryListViewModel
 
 abstract class BaseViewModel: ViewModel() {
 

@@ -5,7 +5,7 @@
 
         <variable
             name="viewModel"
-            type="com.assignment.app.view.ui.deliverylist.DeliveryListViewModel" />
+            type="com.assignment.app.viewmodel.DeliveryListViewModel" />
 
         <variable
             name="callback"
@@ -17,7 +17,7 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".view.ui.deliverylist.DeliveryListActivity">
+        tools:context=".view.ui.DeliveryListActivity">
 
         <ProgressBar
             android:layout_width="wrap_content"

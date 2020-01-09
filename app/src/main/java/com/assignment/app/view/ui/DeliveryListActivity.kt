@@ -1,4 +1,4 @@
-package com.assignment.app.view.ui.deliverylist
+package com.assignment.app.view.ui
 
 import android.os.Bundle
 import android.util.Log
@@ -9,9 +9,8 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.assignment.app.R
 import com.assignment.app.databinding.ActivityMainBinding
-import com.assignment.app.service.model.Delivery
 import com.assignment.app.view.adapter.DeliveryListAdapter
-import com.assignment.app.view.callback.ItemClickCallback
+import com.assignment.app.viewmodel.DeliveryListViewModel
 import com.google.android.material.snackbar.Snackbar
 
 class DeliveryListActivity : AppCompatActivity() {

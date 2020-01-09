@@ -6,7 +6,7 @@
     <data>
         <variable
             name="viewModel"
-            type="com.assignment.app.view.ui.deliverylist.DeliveryViewModel" />
+            type="com.assignment.app.viewmodel.DeliveryViewModel" />
         <variable
             name="callback"
             type="com.assignment.app.view.callback.ItemClickCallback"/>

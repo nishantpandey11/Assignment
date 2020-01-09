@@ -1,4 +1,4 @@
-package com.assignment.app.view.ui.deliverylist
+package com.assignment.app.viewmodel
 
 import android.util.Log
 import android.view.View

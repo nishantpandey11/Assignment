@@ -1,7 +1,7 @@
 package com.assignment.app.di.component
 
 import com.assignment.app.di.module.NetworkModule
-import com.assignment.app.view.ui.deliverylist.DeliveryListViewModel
+import com.assignment.app.viewmodel.DeliveryListViewModel
 import dagger.Component
 import javax.inject.Singleton
 

@@ -1,4 +1,4 @@
-package com.assignment.app.view.ui.deliverylist
+package com.assignment.app.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import com.assignment.app.base.BaseViewModel
