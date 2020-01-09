@@ -55,6 +55,7 @@ class DeliveryListAdapter : ListAdapter<Delivery, DeliveryListAdapter.DeliveryVi
     }
     fun setOnClickListener(listener: ItemClickCallback) {
         itemClickCallback = listener
+
     }
 
    /* public fun setDelivery(list: List<Delivery>){
@@ -68,14 +69,21 @@ class DeliveryListAdapter : ListAdapter<Delivery, DeliveryListAdapter.DeliveryVi
     }*/
 
 
-    class DeliveryViewHolder(private val itemBinding: DeliveryListItemBinding) :
+   inner class DeliveryViewHolder(private val itemBinding: DeliveryListItemBinding) :
         RecyclerView.ViewHolder(itemBinding.root) {
-        //private val itemBinding: DeliveryListItemBinding = itemBinding
+        public var binding:DeliveryListItemBinding = itemBinding
         private val viewModel = DeliveryViewModel()
+
+       /* init {
+            itemView.setOnClickListener {
+                itemClickCallback?.onItemClick(getItem(adapterPosition))
+            }
+        }*/
 
         fun bind(delivery: Delivery){
             viewModel.bind(delivery)
             itemBinding.viewModel = viewModel
+
         }
 
     }

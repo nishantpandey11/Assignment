@@ -1,5 +1,7 @@
 package com.assignment.app.view.callback
 
+import com.assignment.app.service.model.Delivery
+
 interface ItemClickCallback {
-    fun onItemClick()
+    fun onItemClick(delivery: Delivery?)
 }

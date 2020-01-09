@@ -10,6 +10,9 @@
         <variable
             name="callback"
             type="com.assignment.app.view.callback.ItemClickCallback"/>
+        <variable
+            name="delivery"
+            type="com.assignment.app.service.model.Delivery" />
     </data>
 
     <androidx.cardview.widget.CardView
@@ -19,7 +22,7 @@
         android:layout_marginTop="@dimen/margin_medium"
         android:layout_marginEnd="@dimen/margin_medium"
         android:elevation="@dimen/margin_medium"
-        android:onClick="@{() -> callback.onItemClick()}">
+        android:onClick="@{() -> callback.onItemClick(viewModel.getDelivery())}">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -32,7 +35,7 @@
                 android:layout_width="@dimen/dimen_profile_pic"
                 android:layout_height="@dimen/dimen_profile_pic"
                 android:layout_centerVertical="true"
-                app:picture="@{viewModel.getGoodsPic()}" />
+                app:picture="@{viewModel.getDelivery().goodsPicture}" />
 
             <TextView
                 android:id="@+id/tv_from"
@@ -42,7 +45,7 @@
                 android:layout_marginStart="@dimen/margin_medium"
                 tools:text="sdadsa"
                 android:layout_alignParentTop="true"
-                app:text="@{viewModel.getDeliveryFrom()}"
+                app:text="@{String.format(@string/from,viewModel.getDelivery().route.start)}"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
             <TextView
@@ -53,7 +56,7 @@
                 android:layout_alignParentBottom="true"
                 android:layout_toEndOf="@+id/iv_pic"
                 tools:text="sdadsa"
-                android:text="@{viewModel.getDeliveryTo()}"
+                android:text="@{String.format(@string/to,viewModel.getDelivery().route.end)}"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
             <TextView
@@ -63,10 +66,13 @@
                 android:layout_below="@+id/tv_from"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentBottom="true"
-                android:text="@{viewModel.getDeliveryFee()}"
+                android:text= "@{String.format(@string/price,viewModel.getDelivery().price)}"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large" />
         </RelativeLayout>
     </androidx.cardview.widget.CardView>
-   <!-- android:text="@{delivery::getPrice}"-->
+   <!-- android:text="@{delivery::getPrice}"
+   "@{String.format(@string/price,viewModel.getDelivery().price)}"
+                   android:mutableText="@{String.format(@string/from,viewModel.getDeliveryFrom())}"
+-->
 
 </layout>

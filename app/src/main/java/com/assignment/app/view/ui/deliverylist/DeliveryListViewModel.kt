@@ -2,18 +2,21 @@ package com.assignment.app.view.ui.deliverylist
 
 import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import com.assignment.app.R
 import com.assignment.app.base.BaseViewModel
 import com.assignment.app.service.model.Delivery
 import com.assignment.app.service.network.ApiInterface
 import com.assignment.app.view.adapter.DeliveryListAdapter
+import com.assignment.app.view.callback.ItemClickCallback
+import io.reactivex.Observer
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
-class DeliveryListViewModel : BaseViewModel() {
+class DeliveryListViewModel : BaseViewModel(),ItemClickCallback {
     @Inject
     lateinit var apiInterface: ApiInterface
     private lateinit var subscription: Disposable
@@ -21,6 +24,8 @@ class DeliveryListViewModel : BaseViewModel() {
     val errorMessage:MutableLiveData<Int> = MutableLiveData()
     val errorClickListener = View.OnClickListener { loadDeliveries() }
     val deliveryListAdapter:DeliveryListAdapter = DeliveryListAdapter()
+    val itemClick: MutableLiveData<Delivery> = MutableLiveData()
+    lateinit var callback:ItemClickCallback
 
     init {
         loadDeliveries()
@@ -32,16 +37,38 @@ class DeliveryListViewModel : BaseViewModel() {
     }
 
     private fun loadDeliveries() {
-        subscription = apiInterface.getDeliveryList(0, 20)
+          apiInterface.getDeliveryList(0, 20)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .doOnSubscribe { onRetrieveDeliveryListStart() }
-            .doOnTerminate { onRetrieveDeliveryListFinish() }
-            .subscribe(
-                { result -> onRetrieveDeliveryListSuccess(result) },
-                { onRetrieveDeliveryListError() }
+            /*.doOnSubscribe { onRetrieveDeliveryListStart() }
+              .doOnTerminate { onRetrieveDeliveryListFinish() }
+              .subscribe(
+                  { result -> onRetrieveDeliveryListSuccess(result) },
+                  { onRetrieveDeliveryListError() }
+              )*/
+            .subscribe(object: Observer<List<Delivery>>{
+                override fun onComplete() {
+                    onRetrieveDeliveryListFinish()
+                }
 
-            )
+                override fun onSubscribe(d: Disposable) {
+                    subscription = d
+                    onRetrieveDeliveryListStart()
+
+                }
+
+                override fun onNext(t: List<Delivery>) {
+                    onRetrieveDeliveryListSuccess(t)
+                }
+
+                override fun onError(e: Throwable) {
+                    onRetrieveDeliveryListError()
+                }
+
+            })
+
+
+
 
     }
 
@@ -57,13 +84,15 @@ class DeliveryListViewModel : BaseViewModel() {
 
     private fun onRetrieveDeliveryListSuccess(delivery: List<Delivery>) {
         deliveryListAdapter.submitList(delivery)
-        //Log.e("===>",delivery[0].id+"")
-        for (item in delivery){
-            Log.e("===>",item.toString())
-        }
+        deliveryListAdapter.setOnClickListener(this)
     }
 
     private fun onRetrieveDeliveryListError() {
         errorMessage.value = R.string.post_error
     }
+
+    override fun onItemClick(delivery: Delivery?) {
+        itemClick.value = delivery
+    }
+
 }

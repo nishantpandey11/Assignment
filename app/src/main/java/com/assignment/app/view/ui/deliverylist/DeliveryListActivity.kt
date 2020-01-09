@@ -1,6 +1,7 @@
 package com.assignment.app.view.ui.deliverylist
 
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
@@ -8,16 +9,16 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.assignment.app.R
 import com.assignment.app.databinding.ActivityMainBinding
+import com.assignment.app.service.model.Delivery
 import com.assignment.app.view.adapter.DeliveryListAdapter
 import com.assignment.app.view.callback.ItemClickCallback
 import com.google.android.material.snackbar.Snackbar
 
-class DeliveryListActivity : AppCompatActivity(), ItemClickCallback {
+class DeliveryListActivity : AppCompatActivity() {
     private lateinit var mainBinding: ActivityMainBinding
     private lateinit var deliveryAdapter: DeliveryListAdapter
     private lateinit var viewModel: DeliveryListViewModel
     private var errorSnackbar: Snackbar? = null
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,6 +35,17 @@ class DeliveryListActivity : AppCompatActivity(), ItemClickCallback {
                 hideError()
             }
         })
+
+        viewModel.itemClick.observe(this, Observer {
+            Toast.makeText(this, it.route.start, Toast.LENGTH_SHORT).show()
+            Log.e("click--->",it.toString())
+            Log.e("price-->",""+it.getPrice())
+
+
+
+        })
+
+
         mainBinding.viewModel = viewModel
 
 
@@ -71,9 +83,7 @@ class DeliveryListActivity : AppCompatActivity(), ItemClickCallback {
 
     }
 
-    override fun onItemClick() {
-        Toast.makeText(this, "Clicked", Toast.LENGTH_SHORT).show()
-    }
+
 
     private fun showError(errorMessage: Int) {
         errorSnackbar = Snackbar.make(mainBinding.root, errorMessage, Snackbar.LENGTH_INDEFINITE)

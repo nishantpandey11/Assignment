@@ -9,15 +9,17 @@ class DeliveryViewModel: BaseViewModel() {
     private val deliveryTo = MutableLiveData<String>()
     private val deliveryFee = MutableLiveData<String>()
     private val goodsPic = MutableLiveData<String>()
+    private val delivery = MutableLiveData<Delivery>()
 
     fun bind(delivery: Delivery){
-        deliveryFrom.value = delivery.route.start
-        deliveryTo.value = delivery.route.end
-        deliveryFee.value = delivery.deliveryFee
-        goodsPic.value = delivery.goodsPicture
+        //deliveryFrom.value = delivery.route.start
+        //deliveryTo.value = delivery.route.end
+        //deliveryFee.value = delivery.deliveryFee
+        //goodsPic.value = delivery.goodsPicture
+        this.delivery.value = delivery
 
     }
-    fun getDeliveryFrom():MutableLiveData<String>{
+    /*fun getDeliveryFrom():MutableLiveData<String>{
         return deliveryFrom
     }
     fun getDeliveryTo():MutableLiveData<String>{
@@ -28,6 +30,9 @@ class DeliveryViewModel: BaseViewModel() {
     }
     fun getGoodsPic():MutableLiveData<String>{
         return goodsPic
+    }*/
+    fun getDelivery():MutableLiveData<Delivery>{
+        return delivery
     }
 
 }

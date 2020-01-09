@@ -42,9 +42,10 @@ fun setAdapter(view: RecyclerView, adapter: RecyclerView.Adapter<*>) {
 @BindingAdapter("picture")
 fun loadImage(imageView: ImageView, imageURL: String?) {
     Glide.with(imageView.context)
-        .setDefaultRequestOptions(
-            RequestOptions().circleCrop())
+        //.setDefaultRequestOptions(
+          //  RequestOptions().circleCrop())
         .load(imageURL)
         .placeholder(R.drawable.ic_menu_report_image)
+        .error(R.drawable.ic_menu_report_image)
         .into(imageView)
 }
