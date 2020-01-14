@@ -26,19 +26,15 @@ object NetworkModule {
     @Provides
     @Reusable
     @JvmStatic
-    internal fun provideRetrofitInterface(): Retrofit {
+    internal fun provideRetrofitInterface(okHttpClient: OkHttpClient): Retrofit {
         return Retrofit.Builder()
             .baseUrl(BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .addCallAdapterFactory(RxJava2CallAdapterFactory.createWithScheduler(Schedulers.io()))
-            //.client(provideOkHttpClient())
+            .client(okHttpClient)
             .build()
     }
 
-
-
-
-    //todo need to change
     @Provides
     @Reusable
     @JvmStatic

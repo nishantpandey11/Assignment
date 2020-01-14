@@ -2,18 +2,23 @@ package com.assignment.app.view.ui
 
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.assignment.app.R
 import com.assignment.app.databinding.ActivityMainBinding
+import com.assignment.app.service.model.Delivery
 import com.assignment.app.view.adapter.DeliveryListAdapter
+import com.assignment.app.view.callback.ItemClickCallback
 import com.assignment.app.viewmodel.DeliveryListViewModel
 import com.google.android.material.snackbar.Snackbar
+import java.util.*
 
-class DeliveryListActivity : AppCompatActivity() {
+class DeliveryListActivity : AppCompatActivity(), ItemClickCallback {
     private lateinit var mainBinding: ActivityMainBinding
     private lateinit var deliveryAdapter: DeliveryListAdapter
     private lateinit var viewModel: DeliveryListViewModel
@@ -22,11 +27,9 @@ class DeliveryListActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main)
-        //var deliveryAdapter = DeliveryListAdapter()
-        //deliveryAdapter.setOnClickListener(this)
-        //mainBinding.recyclerView.adapter = deliveryAdapter
 
         viewModel = ViewModelProviders.of(this).get(DeliveryListViewModel::class.java)
+
         viewModel.errorMessage.observe(this, Observer { errorMessage ->
             if (errorMessage != null)
                 showError(errorMessage)
@@ -35,51 +38,32 @@ class DeliveryListActivity : AppCompatActivity() {
             }
         })
 
+
+
         viewModel.itemClick.observe(this, Observer {
             Toast.makeText(this, it.route.start, Toast.LENGTH_SHORT).show()
             Log.e("click--->",it.toString())
             Log.e("price-->",""+it.getPrice())
+        })
 
+        mainBinding.swipeRefresh.setOnRefreshListener(object : SwipeRefreshLayout.OnRefreshListener {
+            override fun onRefresh() {
+                viewModel.loadDeliveries()
+            }
 
+        })
+        viewModel.reloadTrigger.observe(this,Observer{
+            if(it) mainBinding.swipeRefresh.isRefreshing = false
+        })
 
+        viewModel.deliveryList.observe(this, Observer {
+            val deliveryListAdapter:DeliveryListAdapter = mainBinding.recyclerView.adapter as DeliveryListAdapter
+            deliveryListAdapter.submitList(it)
+            deliveryListAdapter.setOnClickListener(this)
         })
 
 
         mainBinding.viewModel = viewModel
-
-
-        /*val delivery = Delivery("123","Good","15:00",
-               "http://loremflickr.com/320/240/cat?lock=56004","$45","$3",
-               Route("Gurgaon","Delhi"),
-               Sender("8447164064","Nishant","np@a.com")
-           )
-          val delivery1 = Delivery("1234","Good","15:00",
-              "https://loremflickr.com/320/240/cat?lock=56004","$45","$3",
-              Route("Gurgaon","Delhi"),
-              Sender("8447164064","Nishant","np@a.com")
-          )
-          val delivery2 = Delivery("1235","Good","15:00",
-              "https://loremflickr.com/320/240/cat?lock=56004","$45","$3",
-              Route("Gurgaon","Delhi"),
-              Sender("8447164064","Nishant","np@a.com")
-          )
-          val delivery3 = Delivery("1236","Good","15:00",
-              "https://loremflickr.com/320/240/cat?lock=56004","$45","$3",
-              Route("Gurgaon","Delhi"),
-              Sender("8447164064","Nishant","np@a.com")
-          )
-          Log.e("d====>",String.format(getString(R.string.price),delivery.getPrice()))
-
-          val list= ArrayList<Delivery>();
-          list.add(delivery)
-          list.add(delivery1)
-          list.add(delivery2)
-          list.add(delivery3)
-          deliveryAdapter.setDelivery(list)*/
-
-
-        // mainBinding.delivery = delivery;
-
     }
 
 
@@ -92,5 +76,11 @@ class DeliveryListActivity : AppCompatActivity() {
 
     private fun hideError() {
         errorSnackbar?.dismiss()
+    }
+
+    override fun onItemClick(delivery: Delivery) {
+        Toast.makeText(this, delivery.route.start, Toast.LENGTH_SHORT).show()
+        Log.e("click--->",delivery.toString())
+        Log.e("price-->",""+delivery.getPrice())
     }
 }

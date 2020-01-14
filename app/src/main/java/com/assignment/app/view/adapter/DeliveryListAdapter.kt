@@ -13,7 +13,7 @@ import com.assignment.app.service.model.Delivery
 import com.assignment.app.view.callback.ItemClickCallback
 import com.assignment.app.viewmodel.DeliveryViewModel
 
-class DeliveryListAdapter : ListAdapter<Delivery, DeliveryListAdapter.DeliveryViewHolder>(DIFF_CALLBACK) {
+class DeliveryListAdapter :ListAdapter<Delivery, DeliveryListAdapter.DeliveryViewHolder>(DIFF_CALLBACK) {
     //private lateinit var list: List<Delivery>
 
 
