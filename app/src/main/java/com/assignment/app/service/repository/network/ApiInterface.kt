@@ -1,4 +1,4 @@
-package com.assignment.app.service.network
+package com.assignment.app.service.repository.network
 
 import com.assignment.app.service.model.Delivery
 import io.reactivex.Observable

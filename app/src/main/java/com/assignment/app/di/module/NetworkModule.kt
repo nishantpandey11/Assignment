@@ -1,7 +1,6 @@
 package com.assignment.app.di.module
 
-import android.util.Log
-import com.assignment.app.service.network.ApiInterface
+import com.assignment.app.service.repository.network.ApiInterface
 import com.assignment.app.utils.BASE_URL
 import dagger.Module
 import dagger.Provides

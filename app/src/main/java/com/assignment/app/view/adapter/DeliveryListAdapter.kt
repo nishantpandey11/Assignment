@@ -1,6 +1,7 @@
 package com.assignment.app.view.adapter
 
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
@@ -46,7 +47,9 @@ class DeliveryListAdapter :ListAdapter<Delivery, DeliveryListAdapter.DeliveryVie
     override fun onBindViewHolder(holder: DeliveryViewHolder, position: Int) {
         val currentDelivery : Delivery = getItem(position)//list.get(position)
        ///holder.itemBinding. = currentDelivery
+        Log.e("deli---->","${currentDelivery.isFavorite}")
         holder.bind(currentDelivery)
+
     }
 
     fun getDeliveryAtPosition(position: Int) : Delivery{
