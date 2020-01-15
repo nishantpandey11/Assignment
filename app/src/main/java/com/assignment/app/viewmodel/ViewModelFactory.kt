@@ -15,7 +15,7 @@ class ViewModelFactory(private val activity: AppCompatActivity) : ViewModelProvi
                     .build()
             val repo = DeliveryRepository(db.deliveryDao())
             @Suppress("UNCHECKED_CAST")
-            return DeliveryListViewModel(db.deliveryDao(),repo) as T
+            return DeliveryListViewModel(repo) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }

@@ -4,38 +4,56 @@ import com.assignment.app.data.model.Delivery
 import com.assignment.app.data.source.local.DeliveryDao
 import com.assignment.app.data.source.network.ApiInterface
 import com.assignment.app.utils.LIMIT
+import io.reactivex.Completable
+import io.reactivex.CompletableObserver
 import io.reactivex.Observable
-import javax.inject.Inject
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.Disposable
+import io.reactivex.schedulers.Schedulers
+
 
 class DeliveryRepository(private val deliveryDao: DeliveryDao) {
-    @Inject
-    lateinit var apiInterface: ApiInterface
-
-
 
     fun getDeliveries(apiInterface: ApiInterface): Observable<List<Delivery>> {
-        return apiInterface.getDeliveryList(0, LIMIT).concatMap { dbDeliveryList ->
-            if (dbDeliveryList.isEmpty()) {
-                apiInterface.getDeliveryList(0, LIMIT).concatMap { apiPostList ->
-                    deliveryDao.insertAll(*apiPostList.toTypedArray())
-                    Observable.just(apiPostList)
-                }
-            } else
-                Observable.just(dbDeliveryList)
-        }
-      /*  return apiInterface.getDeliveryList(0, LIMIT)
-            .doOnNext {
-                Log.e("REPOSITORY API * ", it.size.toString())
-                //for (item in it) {
-                    deliveryDao.insertAll(it)
-                //}
-            }*/
-    }
-   /* fun getDeliveriesFromDb(limit: Int, offset: Int): Observable<List<Delivery>> {
-        return deliveryDao.getDeliveries(limit, offset)
-            .toObservable()
-            .doOnNext {
-                Log.e("REPOSITORY DB *** ", it.size.toString())
+        return Observable.fromCallable { deliveryDao.all }
+            .concatMap { dbDeliveryList ->
+                if (dbDeliveryList.isEmpty()) {
+                    apiInterface.getDeliveryList(0, LIMIT).concatMap { apiDeliveryList ->
+                        deliveryDao.insertAll(*apiDeliveryList.toTypedArray())
+                        Observable.just(apiDeliveryList)
+                    }
+                } else
+                    Observable.just(dbDeliveryList)
+
             }
-    }*/
+
+    }
+    fun refreshData(apiInterface: ApiInterface): Observable<List<Delivery>>{
+        return apiInterface.getDeliveryList(0, LIMIT)
+            .doOnNext{
+                deliveryDao.deleteAll()
+                deliveryDao.insertAll(*it.toTypedArray())
+            }
+            .doOnError{
+
+            }
+    }
+
+    fun setFav(delivery: Delivery){
+        Completable.fromAction { deliveryDao.updateDelivery(delivery) }
+            .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+            .subscribe(object : CompletableObserver {
+                override fun onSubscribe(d: Disposable) {}
+                override fun onComplete() {
+
+                }
+
+                override fun onError(e: Throwable) {
+                }
+            })
+
+
+    }
+
+
 }

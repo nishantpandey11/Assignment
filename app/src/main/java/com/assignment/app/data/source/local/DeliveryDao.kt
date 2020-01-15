@@ -17,7 +17,6 @@ interface DeliveryDao {
 
     @Insert
     fun insertAll(vararg delivery: Delivery)
-    //fun insertAll(vararg delivery: Delivery)
 
     @Query("Delete from Delivery")
     fun deleteAll()

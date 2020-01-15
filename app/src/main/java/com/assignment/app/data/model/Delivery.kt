@@ -1,9 +1,10 @@
 package com.assignment.app.data.model
 
-import android.util.Log
 import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.assignment.app.utils.CURRENCY
+import com.assignment.app.utils.DECIMAL_PATTERN
 import java.math.RoundingMode
 import java.text.DecimalFormat
 
@@ -24,13 +25,14 @@ data class Delivery(
 ) {
 
     fun getPrice(): String {
-        val df = DecimalFormat("#.##")
-        df.roundingMode = RoundingMode.CEILING
-        val dfee = deliveryFee.removePrefix("$").toFloat()
-        val surcharge = surcharge.removePrefix("$").toFloat()
-        Log.e("==>price", (dfee + surcharge).toString())
-        return df.format(dfee + surcharge);
+        val dfee = deliveryFee.removePrefix(CURRENCY).toFloat()
+        val surcharge = surcharge.removePrefix(CURRENCY).toFloat()
 
+        val df = DecimalFormat(DECIMAL_PATTERN)
+        df.roundingMode = RoundingMode.CEILING
+
+        //Log.e("==>price", (dfee + surcharge).toString())
+        return df.format(dfee + surcharge);
     }
 
     override fun toString(): String {

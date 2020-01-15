@@ -40,18 +40,13 @@ class DeliveryListActivity : AppCompatActivity(), ItemClickCallback {
             }
         })
 
-
-
         viewModel.itemClick.observe(this, Observer {
             Toast.makeText(this, it.route.start, Toast.LENGTH_SHORT).show()
-            Log.e("click--->", it.toString())
-            Log.e("price-->", "" + it.getPrice())
         })
 
         mainBinding.swipeRefresh.setOnRefreshListener(object :
             SwipeRefreshLayout.OnRefreshListener {
             override fun onRefresh() {
-                //todo delete all data from db and refresh
                 viewModel.refreshUI()
             }
 
@@ -83,14 +78,8 @@ class DeliveryListActivity : AppCompatActivity(), ItemClickCallback {
     }
 
     override fun onItemClick(delivery: Delivery) {
-        Log.e("fav-->", "" + delivery.isFavorite)
-
         Toast.makeText(this, delivery.route.start, Toast.LENGTH_SHORT).show()
-        //Log.e("click--->", delivery.toString())
-       // Log.e("price-->", "" + delivery.getPrice())
         delivery.isFavorite = true
-        Log.e("fav-->", "" + delivery.toString())
         viewModel.setFav(delivery)
-        Log.e("fav-->", "" + delivery.isFavorite)
     }
 }

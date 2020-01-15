@@ -20,10 +20,7 @@ import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
 
-class DeliveryListViewModel constructor(
-    private val deliveryDao: DeliveryDao,
-    private val repository: DeliveryRepository
-) : BaseViewModel(), ItemClickCallback {
+class DeliveryListViewModel constructor(private val repository: DeliveryRepository) : BaseViewModel(), ItemClickCallback {
     @Inject
     lateinit var apiInterface: ApiInterface
     private lateinit var subscription: Disposable
@@ -34,9 +31,11 @@ class DeliveryListViewModel constructor(
     val itemClick: MutableLiveData<Delivery> = MutableLiveData()
     lateinit var callback: ItemClickCallback
 
-    val deliveryList: MutableLiveData<List<Delivery>> = MutableLiveData<List<Delivery>>()
+    val deliveryList: MutableLiveData<List<Delivery>> = MutableLiveData()
 
     val reloadTrigger = MutableLiveData<Boolean>()
+
+    lateinit var disposableObserver: Observer<List<Delivery>>
 
 
     init {
@@ -49,44 +48,47 @@ class DeliveryListViewModel constructor(
         subscription.dispose()
     }
 
+    private fun disposableObserver(): Observer<List<Delivery>>{
+         disposableObserver = object : Observer<List<Delivery>>{
+            override fun onComplete() {
+                onRetrieveDeliveryListFinish()
+            }
+
+            override fun onSubscribe(d: Disposable) {
+                subscription = d
+                onRetrieveDeliveryListStart()
+
+            }
+
+            override fun onNext(t: List<Delivery>) {
+                onRetrieveDeliveryListSuccess(t)
+            }
+
+            override fun onError(e: Throwable) {
+                onRetrieveDeliveryListError()
+            }
+        }
+        return disposableObserver
+    }
+
+
     fun refreshUI() {
-        Completable.fromAction { deliveryDao.deleteAll() }
+        repository.refreshData(apiInterface)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(object : CompletableObserver {
-                override fun onSubscribe(d: Disposable) {}
-                override fun onComplete() {
-                    Log.e("oncomplete", "complete")
-                    loadDeliveries()
-                }
-
-                override fun onError(e: Throwable) {
-                }
-            })
-
-
+            .subscribe(disposableObserver())
     }
 
     fun setFav(delivery: Delivery) {
-        Completable.fromAction { deliveryDao.updateDelivery(delivery) }
-            .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
-            .subscribe(object : CompletableObserver {
-                override fun onSubscribe(d: Disposable) {}
-                override fun onComplete() {
-                    Log.e("oncomplete", "setfav")
-                    //onRetrieveDeliveryListSuccess(delivery)
-                }
-
-                override fun onError(e: Throwable) {
-                }
-            })
+        repository.setFav(delivery)
     }
 
     fun loadDeliveries() {
         repository.getDeliveries(apiInterface)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(object : Observer<List<Delivery>> {
+            .subscribe(disposableObserver())
+        /*object : Observer<List<Delivery>> {
                 override fun onComplete() {
                     onRetrieveDeliveryListFinish()
                 }
@@ -105,7 +107,7 @@ class DeliveryListViewModel constructor(
                     onRetrieveDeliveryListError()
                 }
 
-            })
+            })*/
     }
 
     private fun onRetrieveDeliveryListStart() {
@@ -119,12 +121,8 @@ class DeliveryListViewModel constructor(
     }
 
     private fun onRetrieveDeliveryListSuccess(delivery: List<Delivery>) {
-        //  deliveryListAdapter.submitList(delivery)
-        //deliveryListAdapter.setOnClickListener(this)
         reloadTrigger.value = true
         deliveryList.value = delivery
-
-
     }
 
     private fun onRetrieveDeliveryListError() {
@@ -134,7 +132,6 @@ class DeliveryListViewModel constructor(
 
     override fun onItemClick(delivery: Delivery) {
         //itemClick.value = delivery
-
         //todo remove click callback from here
     }
 

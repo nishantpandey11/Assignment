@@ -58,6 +58,7 @@ class DeliveryListAdapter :ListAdapter<Delivery, DeliveryListAdapter.DeliveryVie
     fun setOnClickListener(listener: ItemClickCallback) {
         itemClickCallback = listener
 
+
     }
 
    /* public fun setDelivery(list: List<Delivery>){
