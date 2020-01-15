@@ -1,4 +1,4 @@
-package com.assignment.app.service.model
+package com.assignment.app.data.model
 
 import android.util.Log
 import androidx.room.Embedded

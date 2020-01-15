@@ -5,15 +5,14 @@ import android.view.View
 import androidx.lifecycle.MutableLiveData
 import com.assignment.app.R
 import com.assignment.app.base.BaseViewModel
-import com.assignment.app.service.model.Delivery
-import com.assignment.app.service.repository.database.DeliveryDao
-import com.assignment.app.service.repository.network.ApiInterface
-import com.assignment.app.utils.LIMIT
+import com.assignment.app.data.DeliveryRepository
+import com.assignment.app.data.model.Delivery
+import com.assignment.app.data.source.local.DeliveryDao
+import com.assignment.app.data.source.network.ApiInterface
 import com.assignment.app.view.adapter.DeliveryListAdapter
 import com.assignment.app.view.callback.ItemClickCallback
 import io.reactivex.Completable
 import io.reactivex.CompletableObserver
-import io.reactivex.Observable
 import io.reactivex.Observer
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
@@ -21,8 +20,10 @@ import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
 
-class DeliveryListViewModel(private val deliveryDao: DeliveryDao) : BaseViewModel(),
-    ItemClickCallback {
+class DeliveryListViewModel constructor(
+    private val deliveryDao: DeliveryDao,
+    private val repository: DeliveryRepository
+) : BaseViewModel(), ItemClickCallback {
     @Inject
     lateinit var apiInterface: ApiInterface
     private lateinit var subscription: Disposable
@@ -48,14 +49,14 @@ class DeliveryListViewModel(private val deliveryDao: DeliveryDao) : BaseViewMode
         subscription.dispose()
     }
 
-    fun refreshUI(){
-        Completable.fromAction{deliveryDao.deleteAll()}
+    fun refreshUI() {
+        Completable.fromAction { deliveryDao.deleteAll() }
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(object : CompletableObserver {
                 override fun onSubscribe(d: Disposable) {}
                 override fun onComplete() {
-                    Log.e("oncomplete","complete")
+                    Log.e("oncomplete", "complete")
                     loadDeliveries()
                 }
 
@@ -66,13 +67,13 @@ class DeliveryListViewModel(private val deliveryDao: DeliveryDao) : BaseViewMode
 
     }
 
-    fun setFav(delivery: Delivery){
-        Completable.fromAction{deliveryDao.updateDelivery(delivery)}
+    fun setFav(delivery: Delivery) {
+        Completable.fromAction { deliveryDao.updateDelivery(delivery) }
             .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
             .subscribe(object : CompletableObserver {
                 override fun onSubscribe(d: Disposable) {}
                 override fun onComplete() {
-                    Log.e("oncomplete","setfav")
+                    Log.e("oncomplete", "setfav")
                     //onRetrieveDeliveryListSuccess(delivery)
                 }
 
@@ -80,17 +81,9 @@ class DeliveryListViewModel(private val deliveryDao: DeliveryDao) : BaseViewMode
                 }
             })
     }
+
     fun loadDeliveries() {
-        Observable.fromCallable { deliveryDao.all }
-            .concatMap { dbDeliveryList ->
-                if (dbDeliveryList.isEmpty()) {
-                    apiInterface.getDeliveryList(0, LIMIT).concatMap { apiPostList ->
-                        deliveryDao.insertAll(*apiPostList.toTypedArray())
-                        Observable.just(apiPostList)
-                    }
-                } else
-                    Observable.just(dbDeliveryList)
-            }
+        repository.getDeliveries(apiInterface)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(object : Observer<List<Delivery>> {

@@ -1,6 +1,6 @@
 package com.assignment.app.di.module
 
-import com.assignment.app.service.repository.network.ApiInterface
+import com.assignment.app.data.source.network.ApiInterface
 import com.assignment.app.utils.BASE_URL
 import dagger.Module
 import dagger.Provides

@@ -1,4 +1,4 @@
-package com.assignment.app.service.model
+package com.assignment.app.data.model
 
 data class Route(
     val start: String,

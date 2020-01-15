@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.assignment.app.R
 import com.assignment.app.databinding.DeliveryListItemBinding
-import com.assignment.app.service.model.Delivery
+import com.assignment.app.data.model.Delivery
 import com.assignment.app.view.callback.ItemClickCallback
 import com.assignment.app.viewmodel.DeliveryViewModel
 

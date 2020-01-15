@@ -1,6 +1,6 @@
-package com.assignment.app.service.repository.network
+package com.assignment.app.data.source.network
 
-import com.assignment.app.service.model.Delivery
+import com.assignment.app.data.model.Delivery
 import io.reactivex.Observable
 import retrofit2.http.GET
 import retrofit2.http.Query

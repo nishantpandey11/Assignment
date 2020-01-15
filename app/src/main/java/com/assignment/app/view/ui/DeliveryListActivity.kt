@@ -10,8 +10,8 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.assignment.app.R
 import com.assignment.app.databinding.ActivityMainBinding
-import com.assignment.app.di.ViewModelFactory
-import com.assignment.app.service.model.Delivery
+import com.assignment.app.viewmodel.ViewModelFactory
+import com.assignment.app.data.model.Delivery
 import com.assignment.app.view.adapter.DeliveryListAdapter
 import com.assignment.app.view.callback.ItemClickCallback
 import com.assignment.app.viewmodel.DeliveryListViewModel
@@ -27,7 +27,9 @@ class DeliveryListActivity : AppCompatActivity(), ItemClickCallback {
         super.onCreate(savedInstanceState)
         mainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main)
 
-        viewModel = ViewModelProviders.of(this, ViewModelFactory(this))
+        viewModel = ViewModelProviders.of(this,
+            ViewModelFactory(this)
+        )
             .get(DeliveryListViewModel::class.java)
 
         viewModel.errorMessage.observe(this, Observer { errorMessage ->

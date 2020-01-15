@@ -1,11 +1,11 @@
-package com.assignment.app.di
+package com.assignment.app.viewmodel
 
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.room.Room
-import com.assignment.app.service.repository.database.AppDatabase
-import com.assignment.app.viewmodel.DeliveryListViewModel
+import com.assignment.app.data.DeliveryRepository
+import com.assignment.app.data.source.local.AppDatabase
 
 class ViewModelFactory(private val activity: AppCompatActivity) : ViewModelProvider.Factory {
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
@@ -13,8 +13,9 @@ class ViewModelFactory(private val activity: AppCompatActivity) : ViewModelProvi
             val db =
                 Room.databaseBuilder(activity.applicationContext, AppDatabase::class.java, "delivery")
                     .build()
+            val repo = DeliveryRepository(db.deliveryDao())
             @Suppress("UNCHECKED_CAST")
-            return DeliveryListViewModel(db.deliveryDao()) as T
+            return DeliveryListViewModel(db.deliveryDao(),repo) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }

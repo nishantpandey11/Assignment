@@ -2,7 +2,7 @@ package com.assignment.app.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import com.assignment.app.base.BaseViewModel
-import com.assignment.app.service.model.Delivery
+import com.assignment.app.data.model.Delivery
 
 class DeliveryViewModel: BaseViewModel() {
     private val deliveryFrom = MutableLiveData<String>()

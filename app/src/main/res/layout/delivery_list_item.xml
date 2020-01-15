@@ -12,7 +12,7 @@
             type="com.assignment.app.view.callback.ItemClickCallback"/>
         <variable
             name="delivery"
-            type="com.assignment.app.service.model.Delivery" />
+            type="com.assignment.app.data.model.Delivery" />
     </data>
 
     <androidx.cardview.widget.CardView
