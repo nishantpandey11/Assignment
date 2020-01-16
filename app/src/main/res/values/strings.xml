@@ -5,4 +5,7 @@
     <string name="price">$ %s</string>
     <string name="retry">Retry</string>
     <string name="post_error">Something went wrong!</string>
+    <string name="text_goods_to_deliver">Goods to deliver</string>
+    <string name="text_add_to_fav">Add to favorite</string>
+    <string name="delivery_fee">Delivery Fee</string>
 </resources>

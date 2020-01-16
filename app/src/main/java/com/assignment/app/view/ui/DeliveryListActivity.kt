@@ -1,5 +1,6 @@
 package com.assignment.app.view.ui
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
@@ -12,6 +13,7 @@ import com.assignment.app.R
 import com.assignment.app.databinding.ActivityMainBinding
 import com.assignment.app.viewmodel.ViewModelFactory
 import com.assignment.app.data.model.Delivery
+import com.assignment.app.utils.DELIVERY_DATA
 import com.assignment.app.view.adapter.DeliveryListAdapter
 import com.assignment.app.view.callback.ItemClickCallback
 import com.assignment.app.viewmodel.DeliveryListViewModel
@@ -81,5 +83,8 @@ class DeliveryListActivity : AppCompatActivity(), ItemClickCallback {
         Toast.makeText(this, delivery.route.start, Toast.LENGTH_SHORT).show()
         delivery.isFavorite = true
         viewModel.setFav(delivery)
+        var intent = Intent(this,DeliveryDetailActivity::class.java)
+        intent.putExtra(DELIVERY_DATA,delivery)
+        startActivity(intent)
     }
 }

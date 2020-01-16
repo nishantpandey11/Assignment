@@ -1,13 +1,16 @@
 package com.assignment.app.data.model
 
+import android.os.Parcelable
 import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.assignment.app.utils.CURRENCY
 import com.assignment.app.utils.DECIMAL_PATTERN
+import kotlinx.android.parcel.Parcelize
 import java.math.RoundingMode
 import java.text.DecimalFormat
 
+@Parcelize
 @Entity
 data class Delivery(
     @field:PrimaryKey
@@ -22,7 +25,7 @@ data class Delivery(
     @Embedded
     val sender: Sender,
     var isFavorite: Boolean
-) {
+) : Parcelable {
 
     fun getPrice(): String {
         val dfee = deliveryFee.removePrefix(CURRENCY).toFloat()

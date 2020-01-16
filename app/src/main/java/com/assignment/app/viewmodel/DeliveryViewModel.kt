@@ -31,7 +31,7 @@ class DeliveryViewModel: BaseViewModel() {
     fun getGoodsPic():MutableLiveData<String>{
         return goodsPic
     }*/
-    fun getDelivery():MutableLiveData<Delivery>{
+     fun getDelivery():MutableLiveData<Delivery>{
         return delivery
     }
 

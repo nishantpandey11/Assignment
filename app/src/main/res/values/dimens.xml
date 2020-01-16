@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="margin_medium">10dp</dimen>
+    <dimen name="margin_small">5dp</dimen>
     <dimen name="dimen_profile_pic">65dp</dimen>
+    <dimen name="fav_dimen">40dp</dimen>
 </resources>
