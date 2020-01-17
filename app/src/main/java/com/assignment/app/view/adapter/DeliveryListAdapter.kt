@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -14,7 +15,7 @@ import com.assignment.app.data.model.Delivery
 import com.assignment.app.view.callback.ItemClickCallback
 import com.assignment.app.viewmodel.DeliveryViewModel
 
-class DeliveryListAdapter :ListAdapter<Delivery, DeliveryListAdapter.DeliveryViewHolder>(DIFF_CALLBACK) {
+class DeliveryListAdapter : PagedListAdapter<Delivery, DeliveryListAdapter.DeliveryViewHolder>(DIFF_CALLBACK) {
     //private lateinit var list: List<Delivery>
 
 
@@ -26,7 +27,7 @@ class DeliveryListAdapter :ListAdapter<Delivery, DeliveryListAdapter.DeliveryVie
                 }
 
                 override fun areContentsTheSame(oldItem: Delivery, newItem: Delivery): Boolean {
-                    return oldItem.id == newItem.id
+                    return oldItem.id == newItem.id && oldItem.pickupTime == newItem.pickupTime
                 }
             }
     }
@@ -45,14 +46,14 @@ class DeliveryListAdapter :ListAdapter<Delivery, DeliveryListAdapter.DeliveryVie
     }
 
     override fun onBindViewHolder(holder: DeliveryViewHolder, position: Int) {
-        val currentDelivery : Delivery = getItem(position)//list.get(position)
+        val currentDelivery : Delivery? = getItem(position)//list.get(position)
        ///holder.itemBinding. = currentDelivery
-        Log.e("deli---->","${currentDelivery.isFavorite}")
+       // Log.e("deli---->","${currentDelivery?.isFavorite}")
         holder.bind(currentDelivery)
 
     }
 
-    fun getDeliveryAtPosition(position: Int) : Delivery{
+    fun getDeliveryAtPosition(position: Int) : Delivery?{
         return getItem(position)
     }
     fun setOnClickListener(listener: ItemClickCallback) {
@@ -83,7 +84,7 @@ class DeliveryListAdapter :ListAdapter<Delivery, DeliveryListAdapter.DeliveryVie
             }
         }*/
 
-        fun bind(delivery: Delivery){
+        fun bind(delivery: Delivery?){
             viewModel.bind(delivery)
             itemBinding.viewModel = viewModel
 

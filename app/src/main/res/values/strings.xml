@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">AssignmentApp</string>
     <string name="from">From: %s</string>
-    <string name="to">TO: %s</string>
+    <string name="to">To: %s</string>
     <string name="price">$ %s</string>
     <string name="retry">Retry</string>
     <string name="post_error">Something went wrong!</string>

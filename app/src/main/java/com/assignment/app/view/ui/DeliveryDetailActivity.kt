@@ -18,8 +18,5 @@ class DeliveryDetailActivity : AppCompatActivity() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_delivery_detail)
         binding.deliveryData = intent.getParcelableExtra(DELIVERY_DATA)
 
-
-
-
     }
 }
