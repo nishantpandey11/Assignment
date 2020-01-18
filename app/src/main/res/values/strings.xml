@@ -8,4 +8,9 @@
     <string name="text_goods_to_deliver">Goods to deliver</string>
     <string name="text_add_to_fav">Add to favorite</string>
     <string name="delivery_fee">Delivery Fee</string>
+    <string name="add_to_favorite">Add to favorite</string>
+    <string name="from_">From</string>
+    <string name="to_">To</string>
+    <string name="title_delivery">My Deliveries</string>
+    <string name="title_delivery_details">Delivery Details</string>
 </resources>

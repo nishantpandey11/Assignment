@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:background="#ffffff"
+    android:elevation="@dimen/cardview_default_elevation"
+    android:layout_marginBottom="@dimen/margin_xlarge"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:padding="@dimen/margin_medium"
+        android:id="@+id/iv_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:src="@drawable/ic_arrow_back_black_24dp"
+        android:layout_margin="@dimen/margin_medium"/>
+
+    <TextView
+        android:padding="@dimen/margin_medium"
+        android:layout_centerInParent="true"
+        android:layout_margin="@dimen/margin_medium"
+        android:id="@+id/tv_tile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/black"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        tools:text="Delivery Details" />
+
+
+</RelativeLayout>

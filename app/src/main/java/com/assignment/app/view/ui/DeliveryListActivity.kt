@@ -18,6 +18,7 @@ import com.assignment.app.view.callback.ItemClickCallback
 import com.assignment.app.viewmodel.DeliveryListViewModel
 import com.assignment.app.viewmodel.ViewModelFactory
 import com.google.android.material.snackbar.Snackbar
+import kotlinx.android.synthetic.main.layout_toolbar.view.*
 
 class DeliveryListActivity : AppCompatActivity(), ItemClickCallback {
     private lateinit var mainBinding: ActivityMainBinding
@@ -29,6 +30,7 @@ class DeliveryListActivity : AppCompatActivity(), ItemClickCallback {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main)
+        mainBinding.toolbar.tv_tile.text = getString(R.string.title_delivery)
 
         mainBinding.recyclerView.adapter = deliveryListAdapter
         deliveryListAdapter.setOnClickListener(this)
@@ -86,9 +88,8 @@ class DeliveryListActivity : AppCompatActivity(), ItemClickCallback {
     }
 
     override fun onItemClick(delivery: Delivery) {
-        Toast.makeText(this, delivery.route.start, Toast.LENGTH_SHORT).show()
-        delivery.isFavorite = true
-        viewModel.setFav(delivery)
+       // delivery.isFavorite = true
+        //viewModel.setFav(delivery)
         val intent = Intent(this, DeliveryDetailActivity::class.java)
         intent.putExtra(DELIVERY_DATA, delivery)
         startActivity(intent)
