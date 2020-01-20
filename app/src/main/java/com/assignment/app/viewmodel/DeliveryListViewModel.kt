@@ -1,5 +1,6 @@
 package com.assignment.app.viewmodel
 
+import android.util.Log
 import android.view.View
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -10,6 +11,7 @@ import com.assignment.app.data.DeliveryRepository
 import com.assignment.app.data.model.Delivery
 import com.assignment.app.data.source.network.ApiInterface
 import com.assignment.app.view.callback.ItemClickCallback
+import io.reactivex.CompletableObserver
 import io.reactivex.Observer
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
@@ -21,7 +23,7 @@ class DeliveryListViewModel constructor(private val repository: DeliveryReposito
     BaseViewModel() {
     @Inject
     lateinit var apiInterface: ApiInterface
-    private lateinit var subscription: Disposable
+    private var subscription: Disposable? = null
     val loadingVisibility: MutableLiveData<Int> = MutableLiveData()
     val errorMessage: MutableLiveData<Int> = MutableLiveData()
     val errorClickListener = View.OnClickListener { loadDeliveries() }
@@ -34,6 +36,7 @@ class DeliveryListViewModel constructor(private val repository: DeliveryReposito
     var liveData: LiveData<PagedList<Delivery>>
 
     lateinit var disposableObserver: Observer<List<Delivery>>
+   // val deliveryLiveData: MutableLiveData<Delivery> = MutableLiveData()
 
 
     init {
@@ -44,7 +47,7 @@ class DeliveryListViewModel constructor(private val repository: DeliveryReposito
 
     override fun onCleared() {
         super.onCleared()
-        subscription.dispose()
+        subscription?.dispose()
     }
 
     private fun disposableObserver(): Observer<List<Delivery>> {
@@ -79,7 +82,17 @@ class DeliveryListViewModel constructor(private val repository: DeliveryReposito
     }
 
     fun setFav(delivery: Delivery) {
-        repository.setFav(delivery)
+        repository.setFav(delivery).subscribe(object : CompletableObserver {
+            override fun onSubscribe(d: Disposable) {
+
+            }
+            override fun onComplete() {
+
+            }
+
+            override fun onError(e: Throwable) {
+            }
+        })
     }
 
     fun loadDeliveries() {

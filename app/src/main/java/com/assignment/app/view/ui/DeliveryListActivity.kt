@@ -1,8 +1,9 @@
 package com.assignment.app.view.ui
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Toast
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
@@ -24,7 +25,8 @@ class DeliveryListActivity : AppCompatActivity(), ItemClickCallback {
     private lateinit var mainBinding: ActivityMainBinding
     private lateinit var viewModel: DeliveryListViewModel
     private var errorSnackbar: Snackbar? = null
-    val deliveryListAdapter: DeliveryListAdapter = DeliveryListAdapter()
+    private val deliveryListAdapter: DeliveryListAdapter = DeliveryListAdapter()
+    private val FAV_REQ = 1
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -46,32 +48,15 @@ class DeliveryListActivity : AppCompatActivity(), ItemClickCallback {
             }
         })
 
+        mainBinding.swipeRefresh.setOnRefreshListener { viewModel.refreshUI() }
 
-        mainBinding.swipeRefresh.setOnRefreshListener(object :
-            SwipeRefreshLayout.OnRefreshListener {
-            override fun onRefresh() {
-                viewModel.refreshUI()
-            }
-
-        })
         viewModel.reloadTrigger.observe(this, Observer {
             if (it) mainBinding.swipeRefresh.isRefreshing = false
         })
 
-
-/*
-        viewModel.deliveryList.observe(this, Observer  {
-            deliveryListAdapter.submitList(it)
-            deliveryListAdapter.setOnClickListener(this)
-        })
-*/
-
-
         viewModel.liveData.observe(this, Observer<PagedList<Delivery>> { pagedList ->
             deliveryListAdapter.submitList(pagedList)
         })
-
-
 
         mainBinding.viewModel = viewModel
     }
@@ -88,10 +73,19 @@ class DeliveryListActivity : AppCompatActivity(), ItemClickCallback {
     }
 
     override fun onItemClick(delivery: Delivery) {
-       // delivery.isFavorite = true
-        //viewModel.setFav(delivery)
         val intent = Intent(this, DeliveryDetailActivity::class.java)
         intent.putExtra(DELIVERY_DATA, delivery)
-        startActivity(intent)
+        startActivityForResult(intent,FAV_REQ)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (requestCode == FAV_REQ && resultCode == Activity.RESULT_OK && data != null) {
+            val delivery = data.getParcelableExtra<Delivery>(DELIVERY_DATA)
+            viewModel.setFav(delivery)
+
+        }
+
     }
 }

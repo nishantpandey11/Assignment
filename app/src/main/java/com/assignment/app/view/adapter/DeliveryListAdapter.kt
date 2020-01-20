@@ -1,23 +1,19 @@
 package com.assignment.app.view.adapter
 
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.assignment.app.R
-import com.assignment.app.databinding.DeliveryListItemBinding
 import com.assignment.app.data.model.Delivery
+import com.assignment.app.databinding.DeliveryListItemBinding
 import com.assignment.app.view.callback.ItemClickCallback
-import com.assignment.app.viewmodel.DeliveryViewModel
 
-class DeliveryListAdapter : PagedListAdapter<Delivery, DeliveryListAdapter.DeliveryViewHolder>(DIFF_CALLBACK) {
-    //private lateinit var list: List<Delivery>
-
+class DeliveryListAdapter :
+    PagedListAdapter<Delivery, DeliveryListAdapter.DeliveryViewHolder>(DIFF_CALLBACK) {
 
     companion object {
         val DIFF_CALLBACK: DiffUtil.ItemCallback<Delivery> =
@@ -27,7 +23,7 @@ class DeliveryListAdapter : PagedListAdapter<Delivery, DeliveryListAdapter.Deliv
                 }
 
                 override fun areContentsTheSame(oldItem: Delivery, newItem: Delivery): Boolean {
-                    return oldItem.id == newItem.id && oldItem.pickupTime == newItem.pickupTime
+                    return oldItem.id == newItem.id && oldItem.isFavorite == newItem.isFavorite
                 }
             }
     }
@@ -46,47 +42,26 @@ class DeliveryListAdapter : PagedListAdapter<Delivery, DeliveryListAdapter.Deliv
     }
 
     override fun onBindViewHolder(holder: DeliveryViewHolder, position: Int) {
-        val currentDelivery : Delivery? = getItem(position)//list.get(position)
-       ///holder.itemBinding. = currentDelivery
-       // Log.e("deli---->","${currentDelivery?.isFavorite}")
+        val currentDelivery: Delivery? = getItem(position)
         holder.bind(currentDelivery)
 
     }
 
-    fun getDeliveryAtPosition(position: Int) : Delivery?{
-        return getItem(position)
-    }
     fun setOnClickListener(listener: ItemClickCallback) {
         itemClickCallback = listener
-
-
     }
 
-   /* public fun setDelivery(list: List<Delivery>){
-        this.list = list
-        notifyDataSetChanged()
-
-
-    }
-    override fun  getItemCount(): Int {
-        return if(::list.isInitialized) list.size else 0
-    }*/
-
-
-   inner class DeliveryViewHolder(private val itemBinding: DeliveryListItemBinding) :
+    inner class DeliveryViewHolder(private val itemBinding: DeliveryListItemBinding) :
         RecyclerView.ViewHolder(itemBinding.root) {
-        public var binding:DeliveryListItemBinding = itemBinding
-        private val viewModel = DeliveryViewModel()
 
-       /* init {
+        init {
             itemView.setOnClickListener {
-                itemClickCallback?.onItemClick(getItem(adapterPosition))
+                itemClickCallback?.onItemClick(getItem(adapterPosition)!!)
             }
-        }*/
+        }
 
-        fun bind(delivery: Delivery?){
-            viewModel.bind(delivery)
-            itemBinding.viewModel = viewModel
+        fun bind(delivery: Delivery?) {
+            itemBinding.viewModel = delivery
 
         }
 

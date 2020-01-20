@@ -7,16 +7,16 @@ import androidx.room.Room
 import com.assignment.app.data.DeliveryRepository
 import com.assignment.app.data.source.local.AppDatabase
 
+@Suppress("UNCHECKED_CAST")
 class ViewModelFactory(private val activity: AppCompatActivity) : ViewModelProvider.Factory {
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+        val db =
+            Room.databaseBuilder(activity.applicationContext, AppDatabase::class.java, "delivery")
+                .build()
+        val repo = DeliveryRepository(db.deliveryDao())
         if (modelClass.isAssignableFrom(DeliveryListViewModel::class.java)) {
-            val db =
-                Room.databaseBuilder(activity.applicationContext, AppDatabase::class.java, "delivery")
-                    .build()
-            val repo = DeliveryRepository(db.deliveryDao())
-            @Suppress("UNCHECKED_CAST")
             return DeliveryListViewModel(repo) as T
         }
-        throw IllegalArgumentException("Unknown ViewModel class")
+        throw IllegalArgumentException("Unknown ViewModel class") as Throwable
     }
 }

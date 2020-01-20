@@ -6,7 +6,7 @@
     <data>
         <variable
             name="viewModel"
-            type="com.assignment.app.viewmodel.DeliveryViewModel" />
+            type="com.assignment.app.data.model.Delivery" />
         <variable
             name="callback"
             type="com.assignment.app.view.callback.ItemClickCallback"/>
@@ -21,8 +21,7 @@
         android:layout_marginStart="@dimen/margin_medium"
         android:layout_marginTop="@dimen/margin_medium"
         android:layout_marginEnd="@dimen/margin_medium"
-        android:elevation="@dimen/margin_medium"
-        android:onClick="@{() -> callback.onItemClick(viewModel.getDelivery())}">
+        android:elevation="@dimen/margin_medium">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -35,7 +34,7 @@
                 android:layout_width="@dimen/dimen_profile_pic"
                 android:layout_height="@dimen/dimen_profile_pic"
                 android:layout_centerVertical="true"
-                app:picture="@{viewModel.getDelivery().goodsPicture}" />
+                app:picture="@{viewModel.goodsPicture}" />
 
             <TextView
                 android:id="@+id/tv_from"
@@ -44,8 +43,9 @@
                 android:layout_toEndOf="@+id/iv_pic"
                 android:layout_marginStart="@dimen/margin_medium"
                 tools:text="sdadsa"
+                android:drawableEnd="@{viewModel.isFavorite ? @drawable/ic_favorite_red_active : null }"
                 android:layout_alignParentTop="true"
-                app:text="@{String.format(@string/from,viewModel.getDelivery().route.start)}"
+                app:text="@{String.format(@string/from,viewModel.route.start)}"
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
             <TextView
@@ -56,7 +56,7 @@
                 android:layout_alignParentBottom="true"
                 android:layout_toEndOf="@+id/iv_pic"
                 tools:text="sdadsa"
-                android:text="@{String.format(@string/to,viewModel.getDelivery().route.end)}"
+                android:text="@{String.format(@string/to,viewModel.route.end)}"
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
             <TextView
@@ -66,7 +66,7 @@
                 android:layout_below="@+id/tv_from"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentBottom="true"
-                android:text= "@{String.format(@string/price,viewModel.getDelivery().price)}"
+                android:text= "@{String.format(@string/price,viewModel.price)}"
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
         </RelativeLayout>
     </androidx.cardview.widget.CardView>

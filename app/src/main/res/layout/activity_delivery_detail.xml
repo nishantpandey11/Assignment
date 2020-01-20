@@ -146,13 +146,14 @@
             android:background="#d3d3d3">
 
             <TextView
+                android:id="@+id/tv_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:drawableEnd="@drawable/ic_favorite_border_inactive"
+                android:drawableEnd="@{deliveryData.favorite ? @drawable/ic_favorite_red_active : @drawable/ic_favorite_border_inactive }"
                 android:drawablePadding="@dimen/margin_large"
                 android:padding="@dimen/margin_xlarge"
-                android:text="@string/add_to_favorite"
+                android:text="@{deliveryData.favorite ? @string/remove_fav : @string/add_to_favorite}"
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                 android:textColor="@color/black" />
         </RelativeLayout>

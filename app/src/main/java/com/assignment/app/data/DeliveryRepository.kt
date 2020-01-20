@@ -9,10 +9,8 @@ import com.assignment.app.data.source.local.DeliveryDao
 import com.assignment.app.data.source.network.ApiInterface
 import com.assignment.app.utils.LIMIT
 import io.reactivex.Completable
-import io.reactivex.CompletableObserver
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 
 
@@ -57,21 +55,22 @@ class DeliveryRepository(private val deliveryDao: DeliveryDao) {
             }
     }
 
-    fun setFav(delivery: Delivery) {
-        Completable.fromAction { deliveryDao.updateDelivery(delivery) }
+    fun setFav(delivery: Delivery): Completable {
+        return Completable.fromAction { deliveryDao.updateDelivery(delivery) }
             .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
-            .subscribe(object : CompletableObserver {
-                override fun onSubscribe(d: Disposable) {}
-                override fun onComplete() {
+        /*.subscribe(object : CompletableObserver {
+            override fun onSubscribe(d: Disposable) {}
+            override fun onComplete() {
 
-                }
+            }
 
-                override fun onError(e: Throwable) {
-                }
-            })
+            override fun onError(e: Throwable) {
+            }
+        })*/
 
 
     }
+
 
 
 }
