@@ -3,13 +3,11 @@ package com.assignment.app.view.ui
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.paging.PagedList
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.assignment.app.R
 import com.assignment.app.data.model.Delivery
 import com.assignment.app.databinding.ActivityMainBinding
@@ -26,7 +24,7 @@ class DeliveryListActivity : AppCompatActivity(), ItemClickCallback {
     private lateinit var viewModel: DeliveryListViewModel
     private var errorSnackbar: Snackbar? = null
     private val deliveryListAdapter: DeliveryListAdapter = DeliveryListAdapter()
-    private val FAV_REQ = 1
+    private val requestCode = 1
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -75,13 +73,13 @@ class DeliveryListActivity : AppCompatActivity(), ItemClickCallback {
     override fun onItemClick(delivery: Delivery) {
         val intent = Intent(this, DeliveryDetailActivity::class.java)
         intent.putExtra(DELIVERY_DATA, delivery)
-        startActivityForResult(intent,FAV_REQ)
+        startActivityForResult(intent,requestCode)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-        if (requestCode == FAV_REQ && resultCode == Activity.RESULT_OK && data != null) {
+        if (requestCode == requestCode && resultCode == Activity.RESULT_OK && data != null) {
             val delivery = data.getParcelableExtra<Delivery>(DELIVERY_DATA)
             viewModel.setFav(delivery)
 

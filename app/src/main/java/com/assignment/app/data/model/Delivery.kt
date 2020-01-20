@@ -34,11 +34,7 @@ data class Delivery(
         val df = DecimalFormat(DECIMAL_PATTERN)
         df.roundingMode = RoundingMode.CEILING
 
-        //Log.e("==>price", (dfee + surcharge).toString())
-        return df.format(dfee + surcharge);
+        return df.format(dfee + surcharge)
     }
 
-    override fun toString(): String {
-        return "Delivery(id='$id', remarks='$remarks', pickupTime='$pickupTime', goodsPicture='$goodsPicture', deliveryFee='$deliveryFee', surcharge='$surcharge', route=$route, sender=$sender, favorite=$isFavorite)"
-    }
 }

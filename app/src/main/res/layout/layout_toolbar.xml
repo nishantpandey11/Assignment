@@ -6,7 +6,8 @@
     android:background="#ffffff"
     android:elevation="@dimen/cardview_default_elevation"
     android:layout_marginBottom="@dimen/margin_xlarge"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    tools:ignore="PrivateResource,UnusedAttribute">
 
     <ImageView
         android:padding="@dimen/margin_medium"
@@ -15,7 +16,8 @@
         android:layout_height="wrap_content"
         android:visibility="gone"
         android:src="@drawable/ic_arrow_back_black_24dp"
-        android:layout_margin="@dimen/margin_medium"/>
+        android:layout_margin="@dimen/margin_medium"
+        tools:ignore="ContentDescription" />
 
     <TextView
         android:padding="@dimen/margin_medium"

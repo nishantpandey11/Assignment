@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
-
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <data>
         <variable
             name="viewModel"
@@ -20,8 +19,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/margin_medium"
         android:layout_marginTop="@dimen/margin_medium"
-        android:layout_marginEnd="@dimen/margin_medium"
-        android:elevation="@dimen/margin_medium">
+        android:layout_marginEnd="@dimen/margin_medium">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -34,7 +32,8 @@
                 android:layout_width="@dimen/dimen_profile_pic"
                 android:layout_height="@dimen/dimen_profile_pic"
                 android:layout_centerVertical="true"
-                app:picture="@{viewModel.goodsPicture}" />
+                app:picture="@{viewModel.goodsPicture}"
+                tools:ignore="ContentDescription" />
 
             <TextView
                 android:id="@+id/tv_from"
@@ -42,7 +41,6 @@
                 android:layout_height="wrap_content"
                 android:layout_toEndOf="@+id/iv_pic"
                 android:layout_marginStart="@dimen/margin_medium"
-                tools:text="sdadsa"
                 android:drawableEnd="@{viewModel.isFavorite ? @drawable/ic_favorite_red_active : null }"
                 android:layout_alignParentTop="true"
                 app:text="@{String.format(@string/from,viewModel.route.start)}"
@@ -55,7 +53,6 @@
                 android:layout_marginStart="@dimen/margin_medium"
                 android:layout_alignParentBottom="true"
                 android:layout_toEndOf="@+id/iv_pic"
-                tools:text="sdadsa"
                 android:text="@{String.format(@string/to,viewModel.route.end)}"
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 

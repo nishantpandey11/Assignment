@@ -15,8 +15,8 @@ class ViewModelFactory(private val activity: AppCompatActivity) : ViewModelProvi
                 .build()
         val repo = DeliveryRepository(db.deliveryDao())
         if (modelClass.isAssignableFrom(DeliveryListViewModel::class.java)) {
-            return DeliveryListViewModel(repo) as T
+            return DeliveryListViewModel(db.deliveryDao(),repo) as T
         }
-        throw IllegalArgumentException("Unknown ViewModel class") as Throwable
+        throw IllegalArgumentException("Unknown ViewModel class")
     }
 }

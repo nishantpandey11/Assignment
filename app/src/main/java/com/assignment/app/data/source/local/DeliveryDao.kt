@@ -3,7 +3,6 @@ package com.assignment.app.data.source.local
 import androidx.paging.DataSource
 import androidx.room.*
 import com.assignment.app.data.model.Delivery
-import io.reactivex.Single
 
 @Dao
 interface DeliveryDao {

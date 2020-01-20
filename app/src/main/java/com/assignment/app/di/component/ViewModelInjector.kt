@@ -1,6 +1,5 @@
 package com.assignment.app.di.component
 
-import com.assignment.app.data.source.network.ApiInterface
 import com.assignment.app.di.module.NetworkModule
 import com.assignment.app.viewmodel.DeliveryListViewModel
 import dagger.Component

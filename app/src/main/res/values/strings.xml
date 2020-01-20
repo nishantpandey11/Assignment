@@ -14,5 +14,5 @@
     <string name="title_delivery">My Deliveries</string>
     <string name="title_delivery_details">Delivery Details</string>
     <string name="remove_fav">Remove from favorite</string>
-    <string name="loading">Loading...</string>
+    <string name="loading">Loading…</string>
 </resources>

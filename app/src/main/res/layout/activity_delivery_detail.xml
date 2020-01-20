@@ -98,7 +98,8 @@
                     android:layout_below="@id/tv_placeholder_gtd"
                     android:layout_margin="@dimen/margin_medium"
                     android:src="@mipmap/ic_launcher_round"
-                    app:picture="@{deliveryData.goodsPicture}" />
+                    app:picture="@{deliveryData.goodsPicture}"
+                    tools:ignore="ContentDescription" />
 
             </RelativeLayout>
 
