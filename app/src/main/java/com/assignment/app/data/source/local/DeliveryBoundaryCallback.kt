@@ -93,9 +93,6 @@ class DeliveryBoundaryCallback(
         fetchDeliveries(totalCount, LIMIT)
     }
 
-    fun clear() {
-        disposable.clear()
-    }
 
     fun onRefresh(reloadTrigger: MutableLiveData<Boolean>) {
         this.reloadTrigger = reloadTrigger

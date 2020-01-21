@@ -47,7 +47,7 @@ class DeliveryListViewModel constructor(
         boundaryCallback.onRefresh(reloadTrigger)
     }
 
-    fun setFav(delivery: Delivery) {
+    fun setFav(delivery: Delivery?) {
         repository.setFav(delivery).subscribe(object : CompletableObserver {
             override fun onSubscribe(d: Disposable) {
                 subscription = d

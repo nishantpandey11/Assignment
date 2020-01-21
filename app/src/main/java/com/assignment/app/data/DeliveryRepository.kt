@@ -28,7 +28,7 @@ class DeliveryRepository(private val deliveryDao: DeliveryDao) {
         return livePageListBuilder.build()
     }
 
-    fun setFav(delivery: Delivery): Completable {
+    fun setFav(delivery: Delivery?): Completable {
         return Completable.fromAction { deliveryDao.updateDelivery(delivery) }
             .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
     }

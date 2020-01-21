@@ -25,5 +25,5 @@ interface DeliveryDao {
     fun updateDelivery(id:String,isFav:Boolean)
 
     @Update
-    fun updateDelivery(delivery: Delivery)
+    fun updateDelivery(delivery: Delivery?)
 }
