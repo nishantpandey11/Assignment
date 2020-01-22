@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
 import com.assignment.app.data.model.Delivery
+import com.assignment.app.data.source.local.AppPreferencesHelper
 import com.assignment.app.data.source.local.DeliveryBoundaryCallback
 import com.assignment.app.data.source.local.DeliveryDao
 import com.assignment.app.data.source.network.ApiInterface
@@ -17,7 +18,9 @@ import javax.inject.Inject
 
 class DeliveryRepository @Inject constructor(
     private val deliveryDao: DeliveryDao,
-    private val apiInterface: ApiInterface
+    private val apiInterface: ApiInterface,
+    private var appPreferencesHelper: AppPreferencesHelper
+
 ) {
     lateinit var deliveryBoundaryCallback: DeliveryBoundaryCallback
 
@@ -29,7 +32,7 @@ class DeliveryRepository @Inject constructor(
         val livePageListBuilder = LivePagedListBuilder<Int, Delivery>(
             deliveryDao.allDeliveries(), config
         )
-        deliveryBoundaryCallback = DeliveryBoundaryCallback(apiInterface, deliveryDao)
+        deliveryBoundaryCallback = DeliveryBoundaryCallback(apiInterface, deliveryDao,appPreferencesHelper)
         livePageListBuilder.setBoundaryCallback(deliveryBoundaryCallback)
         return livePageListBuilder.build()
     }

@@ -16,7 +16,8 @@ import javax.inject.Inject
 
 class DeliveryBoundaryCallback  @Inject constructor(
     private val apiInterface: ApiInterface,
-    private val deliveryDao: DeliveryDao
+    private val deliveryDao: DeliveryDao,
+    private var appPreferencesHelper: AppPreferencesHelper
 ) : PagedList.BoundaryCallback<Delivery>() {
     private var totalCount: Int = 0
     private var isLoaded: Boolean = false
@@ -36,6 +37,9 @@ class DeliveryBoundaryCallback  @Inject constructor(
         Log.e("onItemAtEndLoaded", "--")
         if (!isLoaded) {
             Log.e("onItemAtEndLoaded", "$isLoaded")
+
+            totalCount = appPreferencesHelper.getOffset()
+            Log.e("offset : ",totalCount.toString())
             fetchDeliveries(totalCount, LIMIT)
         }
     }
@@ -62,6 +66,7 @@ class DeliveryBoundaryCallback  @Inject constructor(
             Log.e("fetchDeliveries success", "nothing to show")
         } else {
             totalCount += list.size
+            appPreferencesHelper.setOffset(totalCount)
             if (list.size < LIMIT) {
                 isLoaded = true
                 Log.e("fetchDeliveries success", "eof")
@@ -99,6 +104,7 @@ class DeliveryBoundaryCallback  @Inject constructor(
         this.reloadTrigger = reloadTrigger
         fromSwipeToRefresh = true
         totalCount = 0
+        appPreferencesHelper.setOffset(totalCount)
         isLoaded = false
         disposable.clear()
         onZeroItemsLoaded()

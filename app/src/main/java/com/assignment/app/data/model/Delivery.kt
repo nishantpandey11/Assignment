@@ -24,7 +24,8 @@ data class Delivery(
     val route: Route,
     @Embedded
     val sender: Sender,
-    var isFavorite: Boolean
+    var isFavorite: Boolean,
+    val offset: Int
 ) : Parcelable {
 
     fun getPrice(): String {

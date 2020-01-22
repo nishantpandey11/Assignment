@@ -20,4 +20,5 @@ interface DeliveryDao {
 
     @Update
     fun updateDelivery(delivery: Delivery?)
+
 }
