@@ -1,22 +1,33 @@
 package com.assignment.app.viewmodel
 
-import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import androidx.room.Room
-import com.assignment.app.data.DeliveryRepository
-import com.assignment.app.data.source.local.AppDatabase
+import javax.inject.Inject
+import javax.inject.Provider
 
-@Suppress("UNCHECKED_CAST")
-class ViewModelFactory(private val activity: AppCompatActivity) : ViewModelProvider.Factory {
+open class ViewModelFactory @Inject constructor(
+    private val providers: Map<Class<out ViewModel>, @JvmSuppressWildcards Provider<ViewModel>>
+) : ViewModelProvider.Factory {
+
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-        val db =
-            Room.databaseBuilder(activity.applicationContext, AppDatabase::class.java, "delivery")
-                .build()
-        val repo = DeliveryRepository(db.deliveryDao())
-        if (modelClass.isAssignableFrom(DeliveryListViewModel::class.java)) {
-            return DeliveryListViewModel(db.deliveryDao(),repo) as T
+        var provider = providers[modelClass]
+        if (provider == null) {
+            for ((key, value) in providers) {
+                if (modelClass.isAssignableFrom(key)) {
+                    provider = value
+                    break
+                }
+            }
         }
-        throw IllegalArgumentException("Unknown ViewModel class")
+
+        if (provider == null) {
+            throw IllegalStateException("Unknown View Model $modelClass")
+        }
+
+        try {
+            return provider.get() as T
+        } catch (ex: Exception) {
+            throw RuntimeException(ex)
+        }
     }
 }

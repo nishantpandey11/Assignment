@@ -2,11 +2,10 @@ package com.assignment.app.view.ui
 
 import android.app.Activity
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
-
 import com.assignment.app.R
 import com.assignment.app.data.model.Delivery
 import com.assignment.app.databinding.ActivityDeliveryDetailBinding
@@ -37,6 +36,7 @@ class DeliveryDetailActivity : AppCompatActivity() {
             setResult(Activity.RESULT_OK,intent)
             finish()
         }
+
 
         ivBack.setOnClickListener { super.onBackPressed() }
 

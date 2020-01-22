@@ -8,6 +8,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.paging.PagedList
+import com.assignment.app.DeliveryApp
 import com.assignment.app.R
 import com.assignment.app.data.model.Delivery
 import com.assignment.app.databinding.ActivityMainBinding
@@ -18,6 +19,7 @@ import com.assignment.app.viewmodel.DeliveryListViewModel
 import com.assignment.app.viewmodel.ViewModelFactory
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.layout_toolbar.view.*
+import javax.inject.Inject
 
 class DeliveryListActivity : AppCompatActivity(), ItemClickCallback {
     private lateinit var mainBinding: ActivityMainBinding
@@ -25,17 +27,23 @@ class DeliveryListActivity : AppCompatActivity(), ItemClickCallback {
     private var errorSnackbar: Snackbar? = null
     private val deliveryListAdapter: DeliveryListAdapter = DeliveryListAdapter()
     private val requestCode = 1
+    @Inject
+    lateinit var viewModelFactory: ViewModelFactory
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         mainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         mainBinding.toolbar.tv_tile.text = getString(R.string.title_delivery)
+
+        val app: DeliveryApp = application as DeliveryApp
+        app.appComponent.inject(this)
 
         mainBinding.recyclerView.adapter = deliveryListAdapter
         deliveryListAdapter.setOnClickListener(this)
 
-        viewModel = ViewModelProviders.of(this, ViewModelFactory(this))
+        viewModel = ViewModelProviders.of(this, viewModelFactory)
             .get(DeliveryListViewModel::class.java)
 
         viewModel.errorMessage.observe(this, Observer { errorMessage ->
@@ -57,6 +65,7 @@ class DeliveryListActivity : AppCompatActivity(), ItemClickCallback {
         })
 
         mainBinding.viewModel = viewModel
+
     }
 
 

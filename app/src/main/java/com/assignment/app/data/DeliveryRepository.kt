@@ -12,11 +12,16 @@ import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+import javax.inject.Inject
 
 
-class DeliveryRepository(private val deliveryDao: DeliveryDao) {
+class DeliveryRepository @Inject constructor(
+    private val deliveryDao: DeliveryDao,
+    private val apiInterface: ApiInterface
+) {
+    lateinit var deliveryBoundaryCallback: DeliveryBoundaryCallback
 
-    fun getPagedData(boundaryCallback: DeliveryBoundaryCallback): LiveData<PagedList<Delivery>> {
+    fun getPagedData(): LiveData<PagedList<Delivery>> {
         val config = PagedList.Config.Builder()
             .setPageSize(LIMIT)
             .setEnablePlaceholders(false)
@@ -24,9 +29,11 @@ class DeliveryRepository(private val deliveryDao: DeliveryDao) {
         val livePageListBuilder = LivePagedListBuilder<Int, Delivery>(
             deliveryDao.allDeliveries(), config
         )
-        livePageListBuilder.setBoundaryCallback(boundaryCallback)
+        deliveryBoundaryCallback = DeliveryBoundaryCallback(apiInterface, deliveryDao)
+        livePageListBuilder.setBoundaryCallback(deliveryBoundaryCallback)
         return livePageListBuilder.build()
     }
+
 
     fun setFav(delivery: Delivery?): Completable {
         return Completable.fromAction { deliveryDao.updateDelivery(delivery) }

@@ -12,17 +12,11 @@ interface DeliveryDao {
     @Query("SELECT * FROM Delivery")
     fun allDeliveries(): DataSource.Factory<Int,Delivery>
 
-   // @Query("SELECT * FROM Delivery limit :limit offset :offset")
-   // fun getDeliveries(limit:Int, offset:Int): Single<List<Delivery>>
-
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAll(delivery: List<Delivery>)
 
     @Query("Delete from Delivery")
     fun deleteAll()
-
-    @Query("update Delivery set isFavorite=:isFav where id=:id ")
-    fun updateDelivery(id:String,isFav:Boolean)
 
     @Update
     fun updateDelivery(delivery: Delivery?)

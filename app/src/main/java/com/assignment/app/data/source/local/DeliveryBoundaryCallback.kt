@@ -12,8 +12,9 @@ import io.reactivex.Completable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
+import javax.inject.Inject
 
-class DeliveryBoundaryCallback(
+class DeliveryBoundaryCallback  @Inject constructor(
     private val apiInterface: ApiInterface,
     private val deliveryDao: DeliveryDao
 ) : PagedList.BoundaryCallback<Delivery>() {

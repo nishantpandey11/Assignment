@@ -7,8 +7,4 @@ import kotlinx.android.parcel.Parcelize
 data class Route(
     val start: String,
     val end: String
-) : Parcelable {
-    override fun toString(): String {
-        return "Route(start='$start', end='$end')"
-    }
-}
+) : Parcelable
