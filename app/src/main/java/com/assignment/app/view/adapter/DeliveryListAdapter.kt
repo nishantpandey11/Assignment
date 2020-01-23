@@ -44,8 +44,9 @@ class DeliveryListAdapter :
     override fun onBindViewHolder(holder: DeliveryViewHolder, position: Int) {
         val currentDelivery: Delivery? = getItem(position)
         holder.bind(currentDelivery)
-
     }
+
+
 
     fun setOnClickListener(listener: ItemClickCallback) {
         itemClickCallback = listener

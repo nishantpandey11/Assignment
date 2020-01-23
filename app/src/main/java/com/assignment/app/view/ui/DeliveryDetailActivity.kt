@@ -19,9 +19,14 @@ class DeliveryDetailActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_delivery_detail)
 
-        binding.deliveryData = intent.getParcelableExtra(DELIVERY_DATA)
-        binding.toolbar.tv_tile.text = getString(R.string.title_delivery_details)
+        initViewsAndData()
 
+    }
+
+    private fun initViewsAndData() {
+        binding.deliveryData = intent.getParcelableExtra(DELIVERY_DATA)
+
+        binding.toolbar.tv_tile.text = getString(R.string.title_delivery_details)
         val ivBack = binding.toolbar.iv_back
         ivBack.visibility = View.VISIBLE
 
@@ -31,15 +36,32 @@ class DeliveryDetailActivity : AppCompatActivity() {
             val deliveryDetail: Delivery = binding.deliveryData!!
             deliveryDetail.isFavorite = btnSetFav.text == getString(R.string.add_to_favorite)
 
+            if (deliveryDetail.isFavorite) {
+                btnSetFav.text = getString(R.string.remove_fav)
+                btnSetFav.setCompoundDrawablesWithIntrinsicBounds(
+                    0,
+                    0,
+                    R.drawable.ic_favorite_red_active,
+                    0
+                )
+            } else {
+                btnSetFav.text = getString(R.string.add_to_favorite)
+                btnSetFav.setCompoundDrawablesWithIntrinsicBounds(
+                    0,
+                    0,
+                    R.drawable.ic_favorite_border_inactive,
+                    0
+                )
+
+            }
             val intent = Intent()
             intent.putExtra(DELIVERY_DATA, deliveryDetail)
-            setResult(Activity.RESULT_OK,intent)
-            finish()
+            setResult(Activity.RESULT_OK, intent)
+            //finish()
         }
-
 
         ivBack.setOnClickListener { super.onBackPressed() }
 
-
     }
+
 }

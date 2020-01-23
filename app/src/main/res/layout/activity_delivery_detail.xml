@@ -8,6 +8,7 @@
         <variable
             name="deliveryData"
             type="com.assignment.app.data.model.Delivery" />
+
     </data>
 
     <LinearLayout
@@ -144,7 +145,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/margin_xlarge"
-            android:background="#d3d3d3">
+            android:background="@color/grey">
 
             <TextView
                 android:id="@+id/tv_btn"

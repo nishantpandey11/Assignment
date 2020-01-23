@@ -21,6 +21,7 @@ import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.layout_toolbar.view.*
 import javax.inject.Inject
 
+
 class DeliveryListActivity : AppCompatActivity(), ItemClickCallback {
     private lateinit var mainBinding: ActivityMainBinding
     private lateinit var viewModel: DeliveryListViewModel
@@ -82,7 +83,7 @@ class DeliveryListActivity : AppCompatActivity(), ItemClickCallback {
     override fun onItemClick(delivery: Delivery) {
         val intent = Intent(this, DeliveryDetailActivity::class.java)
         intent.putExtra(DELIVERY_DATA, delivery)
-        startActivityForResult(intent,requestCode)
+        startActivityForResult(intent, requestCode)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -95,4 +96,5 @@ class DeliveryListActivity : AppCompatActivity(), ItemClickCallback {
         }
 
     }
+
 }
